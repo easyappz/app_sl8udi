@@ -1,3 +1,4 @@
+/** Не редактируй этот файл */
 document.addEventListener('DOMContentLoaded', function() {
   let currentHoverElement = null;
   let easyEditMode = false;

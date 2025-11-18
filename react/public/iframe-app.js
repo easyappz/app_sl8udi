@@ -1,3 +1,5 @@
+/** Не редактируй этот файл */
+
 // Глобальный обработчик ошибок
 window.onerror = function (message, source, lineno, colno, error) {
   // Используем StackTrace для парсинга стека ошибок

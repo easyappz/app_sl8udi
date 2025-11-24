@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 import os
 from pathlib import Path
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -71,7 +72,15 @@ INSTALLED_APPS = [
 # REST Framework configuration
 REST_FRAMEWORK = {
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "api.authentication.JWTAuthentication",
+    ],
 }
+
+# JWT Settings
+JWT_SECRET_KEY = SECRET_KEY
+JWT_ALGORITHM = "HS256"
+JWT_ACCESS_TOKEN_LIFETIME = timedelta(days=30)
 
 # drf-spectacular configuration
 SPECTACULAR_SETTINGS = {

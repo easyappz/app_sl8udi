@@ -2,8 +2,14 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
-from api.models import Member
-from api.serializers import RegisterSerializer, LoginSerializer, MemberSerializer
+from api.models import Member, Message
+from api.serializers import (
+    RegisterSerializer,
+    LoginSerializer,
+    MemberSerializer,
+    MessageSerializer,
+    MessageCreateSerializer
+)
 from api.authentication import JWTAuthentication, generate_token
 
 
@@ -77,3 +83,49 @@ class LoginView(APIView):
             },
             status=status.HTTP_200_OK
         )
+
+
+class MessageListView(APIView):
+    """Get all messages sorted by created_at"""
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+    
+    def get(self, request):
+        messages = Message.objects.select_related('member').all().order_by('created_at')
+        serializer = MessageSerializer(messages, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class MessageCreateView(APIView):
+    """Create new message"""
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+    
+    def post(self, request):
+        serializer = MessageCreateSerializer(
+            data=request.data,
+            context={'request': request}
+        )
+        
+        if serializer.is_valid():
+            message = serializer.save()
+            response_serializer = MessageSerializer(message)
+            return Response(
+                response_serializer.data,
+                status=status.HTTP_201_CREATED
+            )
+        
+        return Response(
+            {'error': serializer.errors},
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
+
+class ProfileView(APIView):
+    """Get current member profile"""
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+    
+    def get(self, request):
+        serializer = MemberSerializer(request.user)
+        return Response(serializer.data, status=status.HTTP_200_OK)

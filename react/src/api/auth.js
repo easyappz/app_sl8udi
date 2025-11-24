@@ -14,8 +14,8 @@ export const register = async (username, password) => {
     });
     
     // Save token to localStorage if present
-    if (response.data.token) {
-      localStorage.setItem('authToken', response.data.token);
+    if (response.data.access_token) {
+      localStorage.setItem('authToken', response.data.access_token);
     }
     
     return response.data;
@@ -39,8 +39,8 @@ export const login = async (username, password) => {
     });
     
     // Save token to localStorage if present
-    if (response.data.token) {
-      localStorage.setItem('authToken', response.data.token);
+    if (response.data.access_token) {
+      localStorage.setItem('authToken', response.data.access_token);
     }
     
     return response.data;

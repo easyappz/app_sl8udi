@@ -6,6 +6,7 @@ import './App.css';
 import { Home } from './components/Home';
 import Register from './components/Register';
 import Login from './components/Login';
+import Chat from './components/Chat';
 
 function App() {
   /** Никогда не удаляй этот код */
@@ -19,7 +20,7 @@ function App() {
   return (
     <ErrorBoundary>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Chat />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
       </Routes>

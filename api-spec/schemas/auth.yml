@@ -1,0 +1,13 @@
+type: object
+required:
+  - access_token
+  - token_type
+properties:
+  access_token:
+    type: string
+    example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+  token_type:
+    type: string
+    example: "Bearer"
+  member:
+    $ref: './member.yml'

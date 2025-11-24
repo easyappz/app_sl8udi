@@ -1,0 +1,74 @@
+register:
+  post:
+    summary: Register new member
+    tags:
+      - Authentication
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - username
+              - password
+            properties:
+              username:
+                type: string
+                minLength: 3
+                maxLength: 50
+                example: "john_doe"
+              password:
+                type: string
+                format: password
+                minLength: 6
+                example: "secret123"
+    responses:
+      '201':
+        description: Member successfully registered
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/auth.yml'
+      '400':
+        description: Bad request
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/error.yml'
+
+login:
+  post:
+    summary: Login member
+    tags:
+      - Authentication
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - username
+              - password
+            properties:
+              username:
+                type: string
+                example: "john_doe"
+              password:
+                type: string
+                format: password
+                example: "secret123"
+    responses:
+      '200':
+        description: Successfully logged in
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/auth.yml'
+      '401':
+        description: Invalid credentials
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/error.yml'

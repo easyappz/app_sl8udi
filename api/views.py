@@ -85,23 +85,19 @@ class LoginView(APIView):
         )
 
 
-class MessageListView(APIView):
-    """Get all messages sorted by created_at"""
+class MessageView(APIView):
+    """Get all messages and create new message"""
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
     
     def get(self, request):
+        """Get all messages sorted by created_at"""
         messages = Message.objects.select_related('member').all().order_by('created_at')
         serializer = MessageSerializer(messages, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
-
-
-class MessageCreateView(APIView):
-    """Create new message"""
-    authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticated]
     
     def post(self, request):
+        """Create new message"""
         serializer = MessageCreateSerializer(
             data=request.data,
             context={'request': request}

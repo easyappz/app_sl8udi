@@ -64,3 +64,8 @@ export const logout = () => {
 export const getAuthToken = () => {
   return localStorage.getItem('authToken');
 };
+
+/**
+ * Alias for logout function
+ */
+export const removeAuthToken = logout;
